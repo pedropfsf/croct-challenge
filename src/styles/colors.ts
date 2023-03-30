@@ -1,4 +1,5 @@
 const colors = {
+  white: "#ffffff",
   gray: {
     300: "#F2F5F8",
     380: "#C3CBD5",

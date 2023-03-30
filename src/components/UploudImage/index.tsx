@@ -13,11 +13,16 @@ import {
   InputFile,
   CircleGray,
   WarningImage,
-  ContainerErrorImage,
-  ContainerInitialImage,
+  AreaWithImage,
+  InitialImage,
   TextOrange,
   TextLineBottom,
-  ContainerMessageError
+  AreaMessageError,
+  ImageSelected,
+  AreaControlImage,
+  TextControlImage,
+  RangeControlZoomImage,
+  ButtonSaveImage
 } from "./styles";
 
 import IconSmallImageSvg from "../../assets/icon-small-image.svg";
@@ -61,57 +66,81 @@ export default function UploudImage() {
     event.dataTransfer.dropEffect = "move";
   }
 
-  const stages = {
-    "error": (
-      <ContainerErrorImage>
-        <CircleGray>
-          <WarningImage
-            src={IconWarningImageSvg}
-            alt="warning icon"
-          />
-        </CircleGray>
-        <ContainerMessageError>
-          <TextOrange>Sorry, the upload failed.</TextOrange>
-          <TextLineBottom>Try again</TextLineBottom>
-        </ContainerMessageError>
-      </ContainerErrorImage>
-    ),
-    "initial": (
-      <ContainerInitialImage>
-        <AreaLabel>
-          <SmallSvgOfImage
-            src={IconSmallImageSvg}
-            alt="image simple icon"
-          />
-          <Label>
-            Organization Logo
-          </Label>
-        </AreaLabel>
-        <Description>
-          Drop the image here or click to browse.
-        </Description>
-        <InputFile 
-          ref={inputFileRef}
-          onChange={handleChangeInputFile}
-          onError={() => setCurrentStages("error")}
-        />
-      </ContainerInitialImage>
-    ),
-    "withImage": (
-      <>
-        <h1>Com imagem</h1>
-      </>
-    )
+  function handleError() {
+    setCurrentStages("error");
   }
   
+  if (currentStages === "initial") {
+    return (
+      <Container 
+        draggable={true}
+        onClick={focusInputFile}
+        onDrop={handleOnDrop}
+        onDragOver={configureForOnDrop}
+      >
+        <InitialImage>
+          <AreaLabel>
+            <SmallSvgOfImage
+              src={IconSmallImageSvg}
+              alt="image simple icon"
+            />
+            <Label>
+              Organization Logo
+            </Label>
+          </AreaLabel>
+          <Description>
+            Drop the image here or click to browse.
+          </Description>
+          <InputFile 
+            ref={inputFileRef}
+            onChange={handleChangeInputFile}
+            onError={handleError}
+          />
+        </InitialImage>
+      </Container>
+    )
+  }
+
+  if (currentStages === "error") {
+    return (
+      <Container 
+        draggable={true}
+        onClick={focusInputFile}
+        onDrop={handleOnDrop}
+        onDragOver={configureForOnDrop}
+      >
+        <AreaWithImage>
+          <CircleGray>
+            <WarningImage
+              src={IconWarningImageSvg}
+              alt="warning icon"
+            />
+          </CircleGray>
+          <AreaMessageError>
+            <TextOrange>Sorry, the upload failed.</TextOrange>
+            <TextLineBottom>Try again</TextLineBottom>
+          </AreaMessageError>
+        </AreaWithImage>
+      </Container>
+    )
+  }
+
   return (
-    <Container 
-      draggable={true}
-      onClick={focusInputFile}
-      onDrop={handleOnDrop}
-      onDragOver={configureForOnDrop}
-    >
-      {stages[currentStages]}
+    <Container>
+      <AreaWithImage>
+        <CircleGray>
+          <ImageSelected
+            scale={1}
+            src={valueInputFile}
+            alt="Image"
+          />
+        </CircleGray>
+        <AreaControlImage>
+          <TextControlImage>Crop</TextControlImage>
+          <RangeControlZoomImage/>
+          <ButtonSaveImage>Save</ButtonSaveImage>
+        </AreaControlImage>
+      </AreaWithImage>
     </Container>
   )
 }

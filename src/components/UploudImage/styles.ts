@@ -50,7 +50,7 @@ export const InputFile = styled.input.attrs({
   display: none;
 `;
 
-export const ContainerErrorImage = styled.div`.
+export const AreaWithImage = styled.div`.
   width: 100%;
   height: 100%;
 
@@ -58,7 +58,7 @@ export const ContainerErrorImage = styled.div`.
   align-items: center;
 `;
 
-export const ContainerInitialImage = styled.div`
+export const InitialImage = styled.div`
   width: 100%;
   height: 100%;
 
@@ -81,6 +81,10 @@ export const CircleGray = styled.div`
   align-items: center;
 
   margin-right: 32px;
+
+  overflow: hidden;
+
+  position: relative;
 `;
 
 export const WarningImage = styled.img`
@@ -103,8 +107,74 @@ export const TextLineBottom = styled.span`
   color: ${colors.gray[950]};
 `;
 
-export const ContainerMessageError = styled.div`
+export const AreaMessageError = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
+
+type ImageSelectedProps = {
+  scale?: number;
+}
+
+export const ImageSelected = styled.img<ImageSelectedProps>`
+  width: 100%;
+
+  object-fit: contain;
+
+  z-index: 1;
+  
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: scale(${props => props.scale ?? 1}) translate(-50%, -50%);
+`;
+
+export const AreaControlImage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+
+  height: 100%;
+`;
+
+export const TextControlImage = styled.span`
+  align-self: flex-start;
+
+  color: ${colors.gray[800]};
+  
+  font-size: 16px;
+`;
+
+export const RangeControlZoomImage = styled.input.attrs({
+  type: "range"
+})`
+  align-self: stretch
+`;
+
+export const ButtonSaveImage = styled.button`
+  align-self: flex-end;
+
+  border: none;
+  outline: none;
+
+  border-radius: 16px;
+
+  font-weight: 500;
+
+  color: ${colors.white};
+
+  padding: 8px 32px;
+
+  background-color: ${colors.gray[900]};
+
+  cursor: pointer;
+
+  transition: filter 250ms;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
