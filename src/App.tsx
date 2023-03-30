@@ -1,8 +1,13 @@
+import UploudImage from "./components/UploudImage"
+import ContainerPage from "./components/ContainerPage"
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <ContainerPage>
+      <UploudImage
+
+      />
+    </ContainerPage>
   )
 }
 
