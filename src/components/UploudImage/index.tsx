@@ -24,6 +24,8 @@ import IconSmallImageSvg from "../../assets/icon-small-image.svg";
 import IconWarningImageSvg from "../../assets/icon-warning-image.svg";
 
 type StagesTypes = "error" | "initial" | "withImage";
+type EventChangeInput = React.ChangeEvent<HTMLInputElement>;
+type EventDragInput = React.DragEvent<HTMLInputElement>;
 
 export default function UploudImage() {
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ export default function UploudImage() {
     inputFileRef.current?.click();
   }, [inputFileRef])
 
-  function handleChangeInputFile({ target }: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeInputFile({ target }: EventChangeInput) {
     if (!target.files?.length) {
       return 
     }
@@ -42,7 +44,21 @@ export default function UploudImage() {
     const firstFile = target.files[0];
 
     setValueInputFile(URL.createObjectURL(firstFile));
-    setCurrentStages("error");
+    setCurrentStages("withImage");
+  }
+
+  function handleOnDrop(event: EventDragInput) {
+    event.preventDefault();
+
+    const firstFile = event.dataTransfer.files[0];
+    
+    setValueInputFile(URL.createObjectURL(firstFile));
+    setCurrentStages("withImage");
+  }
+
+  function configureForOnDrop(event: EventDragInput) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
   }
 
   const stages = {
@@ -89,7 +105,12 @@ export default function UploudImage() {
   }
   
   return (
-    <Container onClick={focusInputFile}>
+    <Container 
+      draggable={true}
+      onClick={focusInputFile}
+      onDrop={handleOnDrop}
+      onDragOver={configureForOnDrop}
+    >
       {stages[currentStages]}
     </Container>
   )
