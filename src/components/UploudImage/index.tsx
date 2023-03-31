@@ -30,7 +30,7 @@ import {
 import IconSmallImageSvg from "../../assets/icon-small-image.svg";
 import IconWarningImageSvg from "../../assets/icon-warning-image.svg";
 
-type StagesTypes = "error" | "initial" | "withImage";
+type StagesTypes = "error" | "initial" | "withImage" | "final";
 
 type EventChangeInput = React.ChangeEvent<HTMLInputElement>;
 type EventDragInput = React.DragEvent<HTMLInputElement>;
@@ -56,6 +56,7 @@ export default function UploudImage() {
     if (!target.files?.length) {
       return 
     }
+    setValueInputFile("");
 
     const firstFile = target.files[0];
 
@@ -65,6 +66,7 @@ export default function UploudImage() {
 
   function handleOnDrop(event: EventDragInput) {
     event.preventDefault();
+    setValueInputFile("");
 
     const firstFile = event.dataTransfer.files[0];
     
@@ -83,6 +85,10 @@ export default function UploudImage() {
 
   function handleChangeControlResizeImage({ target }: EventChangeInput) {
     setValueResizeImage(target.value);
+  }
+
+  function handleClickSaveImage() {
+    setCurrentStages("final");
   }
   
   useEffect(() => {
@@ -117,9 +123,6 @@ export default function UploudImage() {
     }
     
   }, [currentStages]);
-
-  console.log("valueX", valueX);
-  console.log("valueY", valueY);
 
   if (currentStages === "initial") {
     return (
@@ -177,8 +180,49 @@ export default function UploudImage() {
     )
   }
 
+  if (currentStages === "withImage") {
+    return (
+      <Container>
+        <AreaWithImage>
+          <CircleGray>
+            <ImageSelected
+              draggable={false}
+              horizontal={String(valueX)}
+              vertical={String(valueY)}
+              ref={imageSelectedRef}
+              scale={valueResizeImage}
+              src={valueInputFile}
+              alt="Image"
+            />
+          </CircleGray>
+          <AreaControlImage>
+            <TextControlImage>Crop</TextControlImage>
+            <RangeControlZoomImage
+              value={valueResizeImage}
+              onChange={handleChangeControlResizeImage}
+              min="0.5"
+              max="3.5"
+              step="0.1"
+            />
+            <ButtonSaveImage
+              onClick={handleClickSaveImage}
+            >
+              Save
+            </ButtonSaveImage>
+          </AreaControlImage>
+        </AreaWithImage>
+      </Container>
+    )
+  }
+
   return (
-    <Container>
+    <Container
+      isCursorPointer={true}
+      draggable={true}
+      onClick={focusInputFile}
+      onDrop={handleOnDrop}
+      onDragOver={configureForOnDrop}
+    >
       <AreaWithImage>
         <CircleGray>
           <ImageSelected
@@ -191,17 +235,25 @@ export default function UploudImage() {
             alt="Image"
           />
         </CircleGray>
-        <AreaControlImage>
-          <TextControlImage>Crop</TextControlImage>
-          <RangeControlZoomImage
-            value={valueResizeImage}
-            onChange={handleChangeControlResizeImage}
-            min="0.5"
-            max="3.5"
-            step="0.1"
+        <InitialImage>
+          <AreaLabel>
+            <SmallSvgOfImage
+              src={IconSmallImageSvg}
+              alt="image simple icon"
+            />
+            <Label>
+              Organization Logo
+            </Label>
+          </AreaLabel>
+          <Description>
+            Drop the image here or click to browse.
+          </Description>
+          <InputFile 
+            ref={inputFileRef}
+            onChange={handleChangeInputFile}
+            onError={handleError}
           />
-          <ButtonSaveImage>Save</ButtonSaveImage>
-        </AreaControlImage>
+        </InitialImage>
       </AreaWithImage>
     </Container>
   )
