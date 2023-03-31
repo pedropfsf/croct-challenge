@@ -35,7 +35,7 @@ type StagesTypes = "error" | "initial" | "withImage" | "final";
 type EventChangeInput = React.ChangeEvent<HTMLInputElement>;
 type EventDragInput = React.DragEvent<HTMLInputElement>;
 
-export default function UploudImage() {
+export default function UploadImage() {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const imageSelectedRef = useRef<HTMLImageElement>(null);
   const [valueInputFile, setValueInputFile] = useState("");
@@ -188,7 +188,7 @@ export default function UploudImage() {
               ref={imageSelectedRef}
               scale={valueResizeImage}
               src={valueInputFile}
-              alt="Image"
+              alt="Image organization"
             />
           </CircleGray>
           <AreaControlImage>
@@ -222,13 +222,13 @@ export default function UploudImage() {
       <AreaWithImage>
         <CircleGray>
           <ImageSelected
-            draggable={false}
+            // draggable={false}
             horizontal={String(valueX)}
             vertical={String(valueY)}
-            ref={imageSelectedRef}
+            // ref={imageSelectedRef}
             scale={valueResizeImage}
             src={valueInputFile}
-            alt="Image"
+            alt="Image organization"
           />
         </CircleGray>
         <InitialImage>
