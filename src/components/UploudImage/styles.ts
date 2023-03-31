@@ -2,7 +2,15 @@ import styled, { css } from "styled-components";
 
 import colors from "../../styles/colors";
 
-export const Container = styled.div`
+const stylesCursorPointer = css`
+  cursor: pointer;
+`;
+
+type ContainerProps = {
+  isCursorPointer?: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   width: 550px;
   height: 160px;
 
@@ -13,6 +21,8 @@ export const Container = styled.div`
   border-radius: 8px;
 
   padding: 32px;
+
+  ${props => props.isCursorPointer && stylesCursorPointer};
 `;
 
 export const SmallSvgOfImage = styled.img`
@@ -114,7 +124,9 @@ export const AreaMessageError = styled.div`
 `;
 
 type ImageSelectedProps = {
-  scale?: number;
+  scale?: string;
+  horizontal?: string;
+  vertical?: string;
 }
 
 export const ImageSelected = styled.img<ImageSelectedProps>`
@@ -125,9 +137,15 @@ export const ImageSelected = styled.img<ImageSelectedProps>`
   z-index: 1;
   
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: scale(${props => props.scale ?? 1}) translate(-50%, -50%);
+  left: ${props => Number(props.horizontal) ?? 0}px;
+  right: ${props => -Number(props.horizontal)}px;
+  top: ${props => Number(props.vertical) ?? 0}px;
+  bottom: ${props => -Number(props.vertical)}px;
+
+  transform: scale(${props => props.scale ?? 1});
+  transform-origin: center;
+
+  margin: auto;
 `;
 
 export const AreaControlImage = styled.div`
