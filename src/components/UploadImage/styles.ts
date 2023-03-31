@@ -146,6 +146,10 @@ export const ImageSelected = styled.img<ImageSelectedProps>`
   transform-origin: center;
 
   margin: auto;
+
+  ::selection {
+    background: transparent;
+  }
 `;
 
 export const AreaControlImage = styled.div`

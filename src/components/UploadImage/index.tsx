@@ -35,14 +35,19 @@ type StagesTypes = "error" | "initial" | "withImage" | "final";
 type EventChangeInput = React.ChangeEvent<HTMLInputElement>;
 type EventDragInput = React.DragEvent<HTMLInputElement>;
 
-export default function UploadImage() {
+type UploadImageProps = {
+  onDrop?: (event: EventDragInput) => void;
+}
+
+export default function UploadImage({ onDrop }: UploadImageProps) {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const imageSelectedRef = useRef<HTMLImageElement>(null);
-  const [valueInputFile, setValueInputFile] = useState("");
+  const [valueInputFile, setValueInputFile] = useState<string>("");
   const [currentStages, setCurrentStages] = useState<StagesTypes>("initial");
   const [valueResizeImage, setValueResizeImage] = useState("1");
   let [valueX, setValueX] = useState(0); 
   let [valueY, setValueY] = useState(0); 
+  const reader = new FileReader();
 
   const focusInputFile = useCallback(() => {
     inputFileRef.current?.click();
@@ -56,18 +61,31 @@ export default function UploadImage() {
 
     const firstFile = target.files[0];
 
-    setValueInputFile(URL.createObjectURL(firstFile));
+    reader.readAsDataURL(firstFile);
+    reader.onload = () => {
+      setValueInputFile(reader.result as string);
+    }
+
     setCurrentStages("withImage");
   }
 
   function handleOnDrop(event: EventDragInput) {
     try {
       event.preventDefault();
+      
+      if (onDrop) {
+        onDrop(event);
+      }
+      
       setValueInputFile("");
   
       const firstFile = event.dataTransfer.files[0];
       
-      setValueInputFile(URL.createObjectURL(firstFile));
+      reader.readAsDataURL(firstFile);
+      reader.onload = () => {
+        setValueInputFile(reader.result as string);
+      }
+
       setCurrentStages("withImage");
     } catch (error) {
       console.log(error);
@@ -163,6 +181,7 @@ export default function UploadImage() {
   if (currentStages === "error") {
     return (
       <Container 
+        isCursorPointer={true}
         draggable={true}
         onClick={focusInputFile}
         onDrop={handleOnDrop}
