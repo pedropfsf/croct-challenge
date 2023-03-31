@@ -24,7 +24,9 @@ import {
   AreaControlImage,
   TextControlImage,
   RangeControlZoomImage,
-  ButtonSaveImage
+  ButtonSaveImage,
+  Buttons,
+  ButtonRemoveImage
 } from "./styles";
 
 import IconSmallImageSvg from "../../assets/icon-small-image.svg";
@@ -109,6 +111,11 @@ export default function UploadImage({ onDrop }: UploadImageProps) {
 
   function handleClickSaveImage() {
     setCurrentStages("final");
+  }
+
+  function removeImageSelected() {
+    setValueInputFile("");
+    setCurrentStages("initial");
   }
   
   useEffect(() => {
@@ -233,11 +240,14 @@ export default function UploadImage({ onDrop }: UploadImageProps) {
               max="3.5"
               step="0.1"
             />
-            <ButtonSaveImage
-              onClick={handleClickSaveImage}
-            >
-              Save
-            </ButtonSaveImage>
+            <Buttons>
+              <ButtonRemoveImage onClick={removeImageSelected}>
+                Remover imagem
+              </ButtonRemoveImage>
+              <ButtonSaveImage onClick={handleClickSaveImage}>
+                Save
+              </ButtonSaveImage>
+            </Buttons>
           </AreaControlImage>
         </AreaWithImage>
       </Container>

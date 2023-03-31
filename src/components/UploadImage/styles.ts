@@ -175,7 +175,7 @@ export const TextControlImage = styled.span`
 export const RangeControlZoomImage = styled.input.attrs({
   type: "range"
 })`
-  align-self: stretch
+  align-self: stretch;
 `;
 
 export const ButtonSaveImage = styled.button`
@@ -202,3 +202,31 @@ export const ButtonSaveImage = styled.button`
     filter: brightness(0.8);
   }
 `;
+
+export const ButtonRemoveImage = styled.button`
+  align-self: flex-end;
+
+  border: 1px solid ${colors.gray[900]};
+  outline: none;
+
+  border-radius: 16px;
+
+  font-weight: 500;
+
+  color: ${colors.gray[900]};
+
+  padding: 8px 32px;
+
+  cursor: pointer;
+
+  transition: filter 250ms;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  gap: 16px;
+`; 
