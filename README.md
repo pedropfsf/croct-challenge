@@ -2,30 +2,6 @@
 
 <p align="center">Challenge of create image upload component</p>
 
-<br/>
-<br/>
-<div align="center">
-  <img
-       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-1.png"
-       alt="Presentation part 1"
-   />
-  <img
-       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-2.png"
-       alt="Presentation part 2"
-   />
-  <img
-       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-3.png"
-       alt="Presentation part 3"
-   />
-   <img
-       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-4.png"
-       alt="Presentation part 4"
-   />
-</div>
-
-<br/>
-<br/>
-
 ## Stacks
 - [Vite](https://vitejs.dev/)
 - [React.js](https://react.dev/)
@@ -67,4 +43,30 @@ yarn dev
 ```
 yarn test
 ```
+
+## presentation
+
+<br/>
+<br/>
+<div align="center">
+  <img
+       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-1.png"
+       alt="Presentation part 1"
+   />
+  <img
+       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-2.png"
+       alt="Presentation part 2"
+   />
+  <img
+       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-3.png"
+       alt="Presentation part 3"
+   />
+   <img
+       src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-4.png"
+       alt="Presentation part 4"
+   />
+</div>
+
+<br/>
+<br/>
 
