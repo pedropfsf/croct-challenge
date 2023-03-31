@@ -147,6 +147,8 @@ export const ImageSelected = styled.img<ImageSelectedProps>`
 
   margin: auto;
 
+  cursor: move;
+
   ::selection {
     background: transparent;
   }
