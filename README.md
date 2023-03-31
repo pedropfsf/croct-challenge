@@ -45,9 +45,6 @@ yarn test
 ```
 
 ## presentation
-
-<br/>
-<br/>
 <div align="center">
   <img
        src="https://github.com/pedropfsf/croct-challenge/blob/master/public/screenshot-part-1.png"
@@ -66,7 +63,4 @@ yarn test
        alt="Presentation part 4"
    />
 </div>
-
-<br/>
-<br/>
 
