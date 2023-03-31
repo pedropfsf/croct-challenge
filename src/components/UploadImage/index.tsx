@@ -61,13 +61,19 @@ export default function UploadImage() {
   }
 
   function handleOnDrop(event: EventDragInput) {
-    event.preventDefault();
-    setValueInputFile("");
+    try {
+      event.preventDefault();
+      setValueInputFile("");
+  
+      const firstFile = event.dataTransfer.files[0];
+      
+      setValueInputFile(URL.createObjectURL(firstFile));
+      setCurrentStages("withImage");
+    } catch (error) {
+      console.log(error);
 
-    const firstFile = event.dataTransfer.files[0];
-    
-    setValueInputFile(URL.createObjectURL(firstFile));
-    setCurrentStages("withImage");
+      setCurrentStages("error");
+    }
   }
 
   function configureForOnDrop(event: EventDragInput) {
@@ -123,6 +129,7 @@ export default function UploadImage() {
   if (currentStages === "initial") {
     return (
       <Container 
+        data-testid="box-upload-image"
         isCursorPointer={true}
         draggable={true}
         onClick={focusInputFile}
@@ -143,6 +150,7 @@ export default function UploadImage() {
             Drop the image here or click to browse.
           </Description>
           <InputFile 
+            data-testid="input-file"
             ref={inputFileRef}
             onChange={handleChangeInputFile}
             onError={handleError}
@@ -171,6 +179,12 @@ export default function UploadImage() {
             <TextOrange>Sorry, the upload failed.</TextOrange>
             <TextLineBottom>Try again</TextLineBottom>
           </AreaMessageError>
+          <InputFile 
+            data-testid="input-file"
+            ref={inputFileRef}
+            onChange={handleChangeInputFile}
+            onError={handleError}
+          />
         </AreaWithImage>
       </Container>
     )
@@ -222,10 +236,8 @@ export default function UploadImage() {
       <AreaWithImage>
         <CircleGray>
           <ImageSelected
-            // draggable={false}
             horizontal={String(valueX)}
             vertical={String(valueY)}
-            // ref={imageSelectedRef}
             scale={valueResizeImage}
             src={valueInputFile}
             alt="Image organization"
@@ -245,6 +257,7 @@ export default function UploadImage() {
             Drop the image here or click to browse.
           </Description>
           <InputFile 
+            id="input-file"
             ref={inputFileRef}
             onChange={handleChangeInputFile}
             onError={handleError}
