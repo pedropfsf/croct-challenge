@@ -43,10 +43,6 @@ export default function UploudImage() {
   const [valueResizeImage, setValueResizeImage] = useState("1");
   let [valueX, setValueX] = useState(0); 
   let [valueY, setValueY] = useState(0); 
-  // const [valuePositionImage, setValuePositionImage] = useState({
-  //   x: 0,
-  //   y: 0,
-  // })
 
   const focusInputFile = useCallback(() => {
     inputFileRef.current?.click();
